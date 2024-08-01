@@ -1,0 +1,66 @@
+# Default profile (common settings)
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: prod
+
+# Development profile
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  application:
+    name: spring-boot-tutorial
+  datasource:
+    url: jdbc:h2:mem:devdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+  h2:
+    console:
+      enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+
+welcome:
+  message: Welcome to Alexis
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        exclude: "env,beans"
+
+# Production profile
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  application:
+    name: spring-boot-tutorial
+  datasource:
+    url: jdbc:postgresql://localhost:5432/monocompanydb
+    driverClassName: org.postgresql.Driver
+    username: your-db-username
+    password: your-db-password
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+
+welcome:
+  message: Welcome to Alexis
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        exclude: "env,beans"
